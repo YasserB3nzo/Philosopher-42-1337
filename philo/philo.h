@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:42:00 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/25 16:58:35 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/25 20:04:40 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 #ifndef PHILO_H
 #define PHILO_H 
 
+#include <pthread.h>   
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/time.h>
+#include <limits.h>
+#include <sys/types.h>
 
 #ifndef PHILO_MAX
 # define PHILO_MAX 200
@@ -33,6 +41,7 @@ typedef struct data
     pthread_mutex_t write_lock;    // print mutex
     pthread_mutex_t dead_lock;     // death flag mutex
     pthread_mutex_t meal_lock;     // meal counting mutex
+    pthread_mutex_t log; // printf 
 } philo_data;
 
 typedef struct philo 
@@ -47,21 +56,19 @@ typedef struct philo
 } philosopher;
 
 
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/time.h>
-#include <pthread.h>
-#include <limits.h>
-
 # define PHILO_MAX_COUNT 200 
 
 
-void checkargument(int ac, char **av);
-void error_message();
+void    checkargument(int ac, char **av);
+void    error_message();
 long	ft_atoi(const char *str);
+void	*get_g_data();
+long	timestamp_in_ms(void);
+void	init_data(philo_data *data, char **av);
+void	*routine();
+void	init_philos(philosopher *philosophers, philo_data *data,pthread_mutex_t *forks);
 
+void	destroy(philo_data *data, philosopher *philosophers, pthread_mutex_t *forks);
 
 
 

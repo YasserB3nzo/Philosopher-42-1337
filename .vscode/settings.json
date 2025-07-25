@@ -1,5 +1,8 @@
 {
     "files.associations": {
         "thread-shared-types.h": "c"
-    }
+    },
+    "[c]": {
+    "editor.defaultFormatter": "keyhr.42-c-format"
+  }
 }
