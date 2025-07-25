@@ -1,20 +1,17 @@
 NAME = philo
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -pthread #-fsanitize=thread
 SRCS = philo.c Src/CheckArg.c \
-	Src/Error.c Src/ft_atoi.c
+	Src/utils.c Src/ft_atoi.c
+
 OBJS = $(SRCS:.c=.o)
-
-LIB_PATH = ./printf
-
-LIB_NAME = libftprintf.a
 
 
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L$(LIB_PATH) -lftprintf
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
 clean:
 	rm -f $(OBJS)

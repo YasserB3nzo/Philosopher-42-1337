@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:42:00 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/06/01 22:55:12 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/25 16:58:35 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef struct philo
 
 # define PHILO_MAX_COUNT 200 
 
-#include"./printf/ft_printf.h"
 
 void checkargument(int ac, char **av);
 void error_message();

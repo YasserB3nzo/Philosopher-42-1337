@@ -6,16 +6,35 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:43:35 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/06/01 18:40:00 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/25 16:58:02 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void init(philo_data *data, philosopher *philosophers)
-{
-    //pthread_mutex_init(&fork, NULL);
+// pthread_mutex_lock(&fork);
+// pthread_mutex_unlock(&fork);
+// pthread_mutex_init(&fork, NULL);
+// pthread_mutex_destroy(&fork);
+// pthread_create(&t1, NULL, routine, NULL);
+// pthread_join(t1, NULL);
 
+void init_data(philo_data *data, char **av)
+{
+    data->number_of_philo = ft_atoi(av[1]);
+    data->time_to_die = ft_atoi(av[2]);
+    data->time_to_eat = ft_atoi(av[3]);
+    data->time_to_sleep = ft_atoi(av[4]);
+    if(av[5])
+        data->number_of_times_each_philosopher_must_eat = ft_atoi(av[5]);
+    else
+        data->number_of_times_each_philosopher_must_eat = 0;
+    data->dead_flag = 0;
+    data->start_time = timestamp_in_ms();
+    data->forks = malloc(sizeof(pthread_mutex_t) * data->number_of_philo);
+    pthread_mutex_init(&data->write_lock, NULL);
+    pthread_mutex_init(&data->dead_lock, NULL);
+    pthread_mutex_init(&data->meal_lock, NULL);
 }
 
 int main(int ac, char **av)
@@ -24,13 +43,13 @@ int main(int ac, char **av)
     philosopher philosophers[PHILO_MAX];
     pthread_mutex_t Forks[PHILO_MAX];
     checkargument( ac, av);
-    // Initialize the data structure
-    init(&data,&philosophers);
+    init_data(&data,av);
     // timestamp_in_ms X has taken a fork
     // timestamp_in_ms X is eating
     // timestamp_in_ms X is sleeping
     // timestamp_in_ms X is thinking
     // timestamp_in_ms X died
+    destroy(&data, philosophers, Forks);
     return 0;
 }
 
