@@ -16,53 +16,35 @@
 #define PHILO_H 
 
 
+#ifndef PHILO_MAX
+# define PHILO_MAX 200
+#endif
 
 typedef struct data
 {
-    int number_of_philo ;
+    int number_of_philo;
     unsigned long time_to_sleep;
     unsigned long time_to_die; //milliseconds 
     unsigned long time_to_eat;
     unsigned long number_of_times_each_philosopher_must_eat;
- //     - array of fork mutexes
- //     - print mutex
- //     - death flag
- //     - start time
-
+    unsigned long start_time;
+    int dead_flag;
+    pthread_mutex_t *forks;        // array of fork mutexes
+    pthread_mutex_t write_lock;    // print mutex
+    pthread_mutex_t dead_lock;     // death flag mutex
+    pthread_mutex_t meal_lock;     // meal counting mutex
 } philo_data;
 
 typedef struct philo 
 {
-    int philo_id;
-    int meal_counter;
-    int last_meal_time;
-    /*
-    - philosopher ID (0, 1, 2, 3...)
-    - thread ID
-    - meal count 
-    - last meal timestamp
-    - pointer to shared data structure
-    - pointer to left fork mutex
-    - pointer to right fork mutex    
-    */
-
-    
+    pthread_t thread;              // thread ID
+    int philo_id;                  // philosopher ID (1, 2, 3...)
+    int meal_counter;              // number of meals eaten
+    unsigned long last_meal_time;  // timestamp of last meal
+    philo_data *data;              // pointer to shared data structure
+    pthread_mutex_t *left_fork;    // pointer to left fork mutex
+    pthread_mutex_t *right_fork;   // pointer to right fork mutex
 } philosopher;
-
-// // typedef struct s_var{
-// // 	int					time2die;
-// // 	int					time2eat;
-// // 	int					time2sleep;
-// 	int					is_dead;
-// // 	int					max_meals;
-// 	unsigned long		start_time;
-// 	int					count_philos;
-// 	philosopher			*philos;
-// 	pthread_mutex_t		*forks;
-// 	pthread_mutex_t		printing;
-// 	pthread_mutex_t		meal;
-// 	pthread_mutex_t		dead;
-// // }	t_var;
 
 
 #include <string.h>

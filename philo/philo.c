@@ -12,10 +12,20 @@
 
 #include "philo.h"
 
+void init(philo_data *data, philosopher *philosophers)
+{
+    //pthread_mutex_init(&fork, NULL);
+
+}
 
 int main(int ac, char **av)
 {
+    philo_data data;
+    philosopher philosophers[PHILO_MAX];
+    pthread_mutex_t Forks[PHILO_MAX];
     checkargument( ac, av);
+    // Initialize the data structure
+    init(&data,&philosophers);
     // timestamp_in_ms X has taken a fork
     // timestamp_in_ms X is eating
     // timestamp_in_ms X is sleeping

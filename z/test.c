@@ -4,19 +4,19 @@
 #include <sys/types.h>  // pid_t
 #include <sys/time.h>
 
-pthread_mutex_t mutex;
-// int counter = 0;
+pthread_mutex_t fork;
+int counter = 0;
 
 void *safe_increment() {
-    pthread_mutex_lock(&mutex);
-    // counter++;  // Protected critical section
-    pthread_mutex_unlock(&mutex);
+    pthread_mutex_lock(&fork);
+    counter++;  // Protected critical section
+    pthread_mutex_unlock(&fork);
     return NULL;
 }
 
 void *routine(void *arg)
 {
-    // safe_increment();
+    safe_increment();
     struct timeval tv;
     // (void)arg; // Avoid unused parameter warning
     if(arg != NULL) {
@@ -50,6 +50,7 @@ int main()
 {
     pthread_t t1; // Declare a thread variable
     pthread_t t2;
+    // pthread_mutex_t mutex; // Declare a mutex variable
     // pthread_attr_t attr; 
 
     // pid_t pid = fork();
@@ -58,12 +59,13 @@ int main()
     //     perror("Fork failed");
     //     return 1; // Exit if fork fails
     // }
-    pthread_mutex_init(&mutex, NULL);
+    pthread_mutex_init(&fork, NULL);
     pthread_create(&t1, NULL, routine, NULL);
     pthread_create(&t2, NULL, routine, "NULL");
     pthread_join(t1, NULL); // Wait for the thread to finish
     pthread_join(t2, NULL);
-    pthread_mutex_destroy(&mutex); // Destroy the mutex
+    pthread_mutex_destroy(&fork);
+    printf("Counter : %d\n", counter); // Destroy the mutex
     // int pthread_create(pthread_t *restrict thread, const pthread_attr_t *restrict attr, void *(*start_routine)(void *), void *restrict arg);
     return 0;
 }
