@@ -15,7 +15,12 @@
 
 int main(int ac, char **av)
 {
-    
+    checkargument( ac, av);
+    // timestamp_in_ms X has taken a fork
+    // timestamp_in_ms X is eating
+    // timestamp_in_ms X is sleeping
+    // timestamp_in_ms X is thinking
+    // timestamp_in_ms X died
     return 0;
 }
 
@@ -29,17 +34,24 @@ int main(int ac, char **av)
 
 // gettimeofday:get curent time with microsecond 
 
-// pthread_detach :Detaches a thread, meaning it will automatically 
-            //   release resources when it terminates without needing pthread_join().
+
+
 // pthread_create : Create a new thread and start execution in the currentr process 
+
 // pthread_join :  It blocks the calling thread until the target thread finishes.
 
 // pthread_mutex_init : To initialize a mutex
+
 // pthread_mutex_destroy : Destroys a mutex when it's no longer needed.
+
 // pthread_mutex_lock : to lock a mutex , if its lready locked the calling thread wait until its availble 
+
 // pthread_mutex_unlock : unlock the thread to make availble for other threads to lock 
 
 // mutex:like a lock used to controll acces to ressources between threads 
+
+// pthread_detach :Detaches a thread, meaning it will automatically 
+            //   release resources when it terminates without needing pthread_join().
 
 // fork = mutex 
 //  philo = thread 

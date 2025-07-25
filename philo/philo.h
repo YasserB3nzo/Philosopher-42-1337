@@ -21,7 +21,7 @@ typedef struct data
 {
     int number_of_philo ;
     unsigned long time_to_sleep;
-    unsigned long time_to_die;
+    unsigned long time_to_die; //milliseconds 
     unsigned long time_to_eat;
     unsigned long number_of_times_each_philosopher_must_eat;
  //     - array of fork mutexes
@@ -49,6 +49,21 @@ typedef struct philo
     
 } philosopher;
 
+// // typedef struct s_var{
+// // 	int					time2die;
+// // 	int					time2eat;
+// // 	int					time2sleep;
+// 	int					is_dead;
+// // 	int					max_meals;
+// 	unsigned long		start_time;
+// 	int					count_philos;
+// 	philosopher			*philos;
+// 	pthread_mutex_t		*forks;
+// 	pthread_mutex_t		printing;
+// 	pthread_mutex_t		meal;
+// 	pthread_mutex_t		dead;
+// // }	t_var;
+
 
 #include <string.h>
 #include <stdio.h>
@@ -56,6 +71,17 @@ typedef struct philo
 #include <unistd.h>
 #include <sys/time.h>
 #include <pthread.h>
+#include <limits.h>
+
+# define PHILO_MAX_COUNT 200 
+
+#include"./printf/ft_printf.h"
+
+void checkargument(int ac, char **av);
+void error_message();
+long	ft_atoi(const char *str);
+
+
 
 
 #endif
