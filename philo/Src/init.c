@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:31:34 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/26 22:06:10 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/26 22:31:43 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,12 @@ void	init_threads(philosopher *philosophers, philo_data *data)
 	while (i < data->number_of_philo)
 	{
 		pthread_create(&philosophers[i].thread, NULL, philosopher_routine, &philosophers[i]);
-		// pthread_join(philosophers[i].thread, NULL);
+		i++;
+	}
+	i = 0;
+	while (i < data->number_of_philo)
+	{
+		pthread_join(philosophers[i].thread, NULL);
 		i++;
 	}
 }
