@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:43:35 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/27 21:56:44 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:20:46 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int ac, char **av)
 	init_philos(philosophers, data, forks);
 	if (data->number_of_philo == 1)
 	{
-		if (!one_casephilo(data))
+		if (!one_casephilo(data, forks))
 			return (1);
 	}
 	else

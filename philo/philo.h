@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:42:00 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/27 21:49:00 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:20:46 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ typedef struct data
 	unsigned long	meals;
 	unsigned long	start_time;
 	int				dead_flag;
-	pthread_mutex_t	*forks;
 	pthread_mutex_t	write_lock;
 	pthread_mutex_t	dead_lock;
 	pthread_mutex_t	meal_lock;
@@ -66,7 +65,7 @@ void				init_philos(philosopher *philosophers, philo_data *data,
 void				*monitor(void *arg);
 void				destroy(philo_data *data, philosopher *philosophers,
 						pthread_mutex_t *forks);
-int					one_casephilo(philo_data *data);
+int					one_casephilo(philo_data *data, pthread_mutex_t *forks);
 void				*philosopher_routine(void *arg);
 void				init_threads(philosopher *philosophers, philo_data *data);
 void				eat(philosopher *philo);

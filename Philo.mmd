@@ -1,0 +1,87 @@
+---
+id: 582e46fb-d511-436a-bf91-17763422ad19
+---
+flowchart TD
+    A[Program Start] --> B[Initialize Program & Forks]
+    B --> C[Create Monitor Thread]
+    C --> D[Create All Philosopher Threads]
+    
+    %% Monitor Thread Flow
+    C --> E[Monitor Thread Loop]
+    E --> F{Check if any philosopher died?}
+    F -->|Yes| G[Set dead flag = 1]
+    F -->|No| H{All philosophers ate enough?}
+    H -->|Yes| I[Set dead flag = 1]
+    H -->|No| E
+    G --> J[Monitor Thread Exits]
+    I --> J
+    
+    %% Philosopher Thread Flow
+    D --> K[Individual Philosopher Thread]
+    K --> L{Is philosopher ID even?}
+    L -->|Yes| M[Sleep 1ms - stagger start]
+    L -->|No| N[Start immediately]
+    M --> O[Main Philosopher Loop]
+    N --> O
+    
+    O --> P{Check dead_loop - someone died?}
+    P -->|Yes| Q[Thread Exits]
+    P -->|No| R[EAT PHASE]
+    
+    %% Eating Phase Detail
+    R --> S[Lock right fork]
+    S --> T[Print 'has taken a fork']
+    T --> U{Only 1 philosopher?}
+    U -->|Yes| V[Wait to die, unlock fork, return]
+    U -->|No| W[Lock left fork]
+    W --> X[Print 'has taken a fork']
+    X --> Y[Set eating = 1]
+    Y --> Z[Print 'is eating']
+    Z --> AA[Lock meal_lock]
+    AA --> BB[Update last_meal time]
+    BB --> CC[Increment meals_eaten]
+    CC --> DD[Unlock meal_lock]
+    DD --> EE[Sleep for time_to_eat]
+    EE --> FF[Set eating = 0]
+    FF --> GG[Unlock left fork]
+    GG --> HH[Unlock right fork]
+    
+    %% Sleep Phase
+    HH --> II[SLEEP PHASE]
+    II --> JJ[Print 'is sleeping']
+    JJ --> KK[Sleep for time_to_sleep]
+    
+    %% Think Phase
+    KK --> LL[THINK PHASE]
+    LL --> MM[Print 'is thinking']
+    MM --> O
+    
+    %% Monitor Details
+    F --> NN[philosopher_dead function]
+    NN --> OO[Lock meal_lock]
+    OO --> PP{current_time - last_meal >= time_to_die AND not eating?}
+    PP -->|Yes| QQ[Unlock meal_lock, return 1]
+    PP -->|No| RR[Unlock meal_lock, return 0]
+    
+    H --> SS[check_if_all_ate function]
+    SS --> TT[Count philosophers who ate enough]
+    TT --> UU{All finished eating?}
+    UU -->|Yes| VV[Return 1]
+    UU -->|No| WW[Return 0]
+    
+    %% Thread Joining
+    J --> XX[Join Monitor Thread]
+    XX --> YY[Join All Philosopher Threads]
+    YY --> ZZ[Program End]
+    
+    %% Death Detection
+    G --> AAA[print_message 'died']
+    I --> BBB[All philosophers stop]
+    
+    style A fill:#e1f5fe
+    style J fill:#ffcdd2
+    style Q fill:#ffcdd2
+    style ZZ fill:#c8e6c9
+    style R fill:#fff3e0
+    style II fill:#f3e5f5
+    style LL fill:#e8f5e8

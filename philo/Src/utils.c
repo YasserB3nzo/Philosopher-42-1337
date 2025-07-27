@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 16:13:45 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/27 22:03:31 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:20:46 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,13 @@ void	destroy(philo_data *data, philosopher *philosophers,
 
 	i = 0;
 	while (i < data->number_of_philo)
-		pthread_mutex_destroy(&data->forks[i]);
+	{
+		pthread_mutex_destroy(&forks[i]);
+		i++;
+	}
 	pthread_mutex_destroy(&data->write_lock);
 	pthread_mutex_destroy(&data->dead_lock);
 	pthread_mutex_destroy(&data->meal_lock);
-	free(data->forks);
 }
 void	ft_usleep(unsigned long milliseconds)
 {
@@ -44,7 +46,6 @@ void	ft_usleep(unsigned long milliseconds)
     start = get_current_time();
     while ((get_current_time() - start) < milliseconds)
         usleep(500);
-    // No return needed for void function
 }
 
 void	*get_g_data(void)

@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:31:34 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/27 21:59:44 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:20:46 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	init_data(philo_data *data, char **av)
 		data->meals = ft_atoi(av[5]);
 	else
 		data->meals = -1;
-	data->forks = malloc(sizeof(pthread_mutex_t) * data->number_of_philo);
+	data->dead_flag = 0;
 	pthread_mutex_init(&data->write_lock, NULL);
 	pthread_mutex_init(&data->dead_lock, NULL);
 	pthread_mutex_init(&data->meal_lock, NULL);
-	data->start_time = timestamp_in_ms();
+	data->start_time = get_current_time();
 }
 
 void	init_philos(philosopher *philosophers, philo_data *data,
@@ -34,6 +34,12 @@ void	init_philos(philosopher *philosophers, philo_data *data,
 {
 	int	i;
 
+	i = 0;
+	while (i < data->number_of_philo)
+	{
+		pthread_mutex_init(&forks[i], NULL);
+		i++;
+	}
 	i = 0;
 	while (i < data->number_of_philo)
 	{
@@ -46,12 +52,6 @@ void	init_philos(philosopher *philosophers, philo_data *data,
 		philosophers[i].right_fork = &forks[(i + 1) % data->number_of_philo];
 		i++;
 	}
-	i = 0;
-	while (i < data->number_of_philo)
-	{
-		pthread_mutex_init(&data->forks[i], NULL);
-		i++;
-	}
 }
 void	init_threads(philosopher *philosophers, philo_data *data)
 {
@@ -59,7 +59,7 @@ void	init_threads(philosopher *philosophers, philo_data *data)
 	int			i;
 
 	i = 0;
-	if (pthread_create(&serbay, NULL, &monitor, &philosophers) != 0)
+	if (pthread_create(&serbay, NULL, &monitor, philosophers) != 0)
 	{
 		write(2, "Error creating thread\n", 22);
 		return ;
