@@ -6,9 +6,14 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 16:30:16 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/26 16:31:10 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/27 16:47:20 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
+void *monitor(void *arg)
+{
+    printf("---------------->Monitor thread started\n");
+    return (NULL); 
+}

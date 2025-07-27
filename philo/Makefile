@@ -6,7 +6,7 @@ valgrind = -fsanitize=thread
 
 SRCS = philo.c Src/parsing.c \
 	Src/utils.c Src/init.c \
-	Src/routine.c
+	Src/routine.c Src/monitor.c \
 
 OBJS = $(SRCS:.c=.o)
 

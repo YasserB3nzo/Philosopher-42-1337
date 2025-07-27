@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:31:34 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/26 22:31:43 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/27 16:45:53 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,29 @@ void	init_philos(philosopher *philosophers, philo_data *data,
 }
 void	init_threads(philosopher *philosophers, philo_data *data)
 {
-	int	i;
+	pthread_t	serbay;
+	int			i;
 
 	i = 0;
+	if(pthread_create(&serbay, NULL, &monitor, &philosophers) != 0)
+	{
+		write(2, "Error creating thread\n", 22); 
+		return ;
+	}
 	while (i < data->number_of_philo)
 	{
-		pthread_create(&philosophers[i].thread, NULL, philosopher_routine, &philosophers[i]);
+		pthread_create(&philosophers[i].thread, NULL, philosopher_routine,
+				&philosophers[i]);
 		i++;
 	}
 	i = 0;
+	pthread_join(serbay, NULL);
 	while (i < data->number_of_philo)
 	{
 		pthread_join(philosophers[i].thread, NULL);
 		i++;
 	}
+
+
 }
 
-// int pthread_create(pthread_t *thread, const pthread_attr_t *attr,
-//                    void *(*start_routine)(void *), void *arg);

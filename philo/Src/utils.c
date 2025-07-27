@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/27 16:13:45 by ybenzidi          #+#    #+#             */
+/*   Updated: 2025/07/27 16:13:48 by ybenzidi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../philo.h"
 
 long	timestamp_in_ms(void)
@@ -5,7 +17,6 @@ long	timestamp_in_ms(void)
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	// printf("%ld\n", (tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 int	error_message(void)
@@ -68,10 +79,3 @@ long	ft_atoi(const char *str)
 	}
 	return (num * sign);
 }
-
-// pthread_mutex_lock(&fork);
-// pthread_mutex_unlock(&fork);
-// pthread_mutex_init(&fork, NULL);
-// pthread_mutex_destroy(&fork);
-// pthread_create(&t1, NULL, routine, NULL);
-// pthread_join(t1, NULL);
