@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:31:34 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/27 16:45:53 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/27 21:59:44 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,14 @@
 
 void	init_data(philo_data *data, char **av)
 {
-	data->number_of_philo = ft_atoi(av[1]); // verify atoi
+	data->number_of_philo = ft_atoi(av[1]);
 	data->time_to_die = ft_atoi(av[2]);
 	data->time_to_eat = ft_atoi(av[3]);
 	data->time_to_sleep = ft_atoi(av[4]);
 	if (av[5])
-		data->number_of_times_each_philosopher_must_eat = ft_atoi(av[5]);
+		data->meals = ft_atoi(av[5]);
 	else
-		data->number_of_times_each_philosopher_must_eat = -1;
-	data->dead_flag = 0;
+		data->meals = -1;
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->number_of_philo);
 	pthread_mutex_init(&data->write_lock, NULL);
 	pthread_mutex_init(&data->dead_lock, NULL);
@@ -38,6 +37,7 @@ void	init_philos(philosopher *philosophers, philo_data *data,
 	i = 0;
 	while (i < data->number_of_philo)
 	{
+		philosophers[i].one_dead_flag = 0;
 		philosophers[i].philo_id = i + 1;
 		philosophers[i].meal_counter = 0;
 		philosophers[i].last_meal_time = data->start_time;
@@ -59,9 +59,9 @@ void	init_threads(philosopher *philosophers, philo_data *data)
 	int			i;
 
 	i = 0;
-	if(pthread_create(&serbay, NULL, &monitor, &philosophers) != 0)
+	if (pthread_create(&serbay, NULL, &monitor, &philosophers) != 0)
 	{
-		write(2, "Error creating thread\n", 22); 
+		write(2, "Error creating thread\n", 22);
 		return ;
 	}
 	while (i < data->number_of_philo)
@@ -77,7 +77,4 @@ void	init_threads(philosopher *philosophers, philo_data *data)
 		pthread_join(philosophers[i].thread, NULL);
 		i++;
 	}
-
-
 }
-

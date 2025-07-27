@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 16:13:45 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/27 16:13:48 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:03:31 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,42 @@ int	error_message(void)
 	write(2, "Error: Invalid arguments\n", 24);
 	return (0);
 }
-// void	destroy(philo_data *data, philosopher *philosophers,
-// 		pthread_mutex_t *forks)
-// {
-// 	int	i;
+void	destroy(philo_data *data, philosopher *philosophers,
+		pthread_mutex_t *forks)
+{
+	int	i;
 
-// 	// Destroy fork mutexes
-// 	i = 0;
-// 	while (i < data->number_of_philo)
-// 		pthread_mutex_destroy(&data->forks[i]);
-// 	// Destroy global mutexes
-// 	pthread_mutex_destroy(&data->write_lock);
-// 	pthread_mutex_destroy(&data->dead_lock);
-// 	pthread_mutex_destroy(&data->meal_lock);
-// 	// Free forks array
-// 	free(data->forks);
-// }
+	i = 0;
+	while (i < data->number_of_philo)
+		pthread_mutex_destroy(&data->forks[i]);
+	pthread_mutex_destroy(&data->write_lock);
+	pthread_mutex_destroy(&data->dead_lock);
+	pthread_mutex_destroy(&data->meal_lock);
+	free(data->forks);
+}
+void	ft_usleep(unsigned long milliseconds)
+{
+    size_t	start;
+
+    start = get_current_time();
+    while ((get_current_time() - start) < milliseconds)
+        usleep(500);
+    // No return needed for void function
+}
 
 void	*get_g_data(void)
 {
 	static philo_data	data;
 
 	return ((void *)&data);
+}
+size_t	get_current_time(void)
+{
+    struct timeval	time;
+
+    if (gettimeofday(&time, NULL) == -1)
+        write(2, "gettimeofday() error\n", 22);
+    return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 long	ft_atoi(const char *str)
 {

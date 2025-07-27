@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:43:35 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/27 16:10:24 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/27 21:56:44 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ int	main(int ac, char **av)
 	}
 	else
 		init_threads(philosophers, data);
+	destroy(data, philosophers, forks);
 	return (0);
 }
