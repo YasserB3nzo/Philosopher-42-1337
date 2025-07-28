@@ -1,36 +1,18 @@
-/* *********************************int	philosopher_dead(philosopher *philo)
-{
-	pthread_mutex_lock(&philo->data->meal_lock);
-	if (get_current_time() - philo->last_meal_time > philo->data->time_to_die)
-		return (pthread_mutex_unlock(&philo->data->meal_lock), 1);
-	pthread_mutex_unlock(&philo->data->meal_lock);
-	return (0);
-}********************************* */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/26 16:30:16 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/28 15:43:40 by ybenzidi         ###   ########.fr       */
+/*   Created: 2025/07/28 16:34:32 by ybenzidi          #+#    #+#             */
+/*   Updated: 2025/07/28 16:41:47 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	print_message(char *str, philosopher *philo, int id)
-{
-	size_t	time;
-
-	pthread_mutex_lock(&philo->data->write_lock);
-	time = get_current_time() - philo->data->start_time;
-	if (!dead_flag_check(philo))
-		printf("%zu %d %s\n", time, id, str);
-	pthread_mutex_unlock(&philo->data->write_lock);
-}
-
-int	dead_flag_check(philosopher *philo)
+int	dead_flag_check(t_philosopher *philo)
 {
 	pthread_mutex_lock(&philo->data->dead_lock);
 	if (philo->data->dead_flag == 1)
@@ -41,15 +23,18 @@ int	dead_flag_check(philosopher *philo)
 	pthread_mutex_unlock(&philo->data->dead_lock);
 	return (0);
 }
-int	philosopher_dead(philosopher *philo)
+
+int	philosopher_dead(t_philosopher *philo)
 {
 	pthread_mutex_lock(&philo->data->meal_lock);
-	if (get_current_time() - philo->last_meal_time > philo->data->time_to_die && philo->eating == 0)
+	if (get_current_time() - philo->last_meal_time > philo->data->time_to_die
+		&& philo->eating == 0)
 		return (pthread_mutex_unlock(&philo->data->meal_lock), 1);
 	pthread_mutex_unlock(&philo->data->meal_lock);
 	return (0);
 }
-int	check_if_dead(philosopher *philos)
+
+int	check_if_dead(t_philosopher *philos)
 {
 	int	i;
 
@@ -60,7 +45,7 @@ int	check_if_dead(philosopher *philos)
 		{
 			print_message("died", &philos[i], philos[i].philo_id);
 			pthread_mutex_lock(&philos[i].data->dead_lock);
-			philos[i].data->dead_flag = 1;  // Set global flag to stop simulation
+			philos[i].data->dead_flag = 1;
 			pthread_mutex_unlock(&philos[i].data->dead_lock);
 			return (1);
 		}
@@ -68,7 +53,8 @@ int	check_if_dead(philosopher *philos)
 	}
 	return (0);
 }
-int	check_if_all_ate(philosopher *philos)
+
+int	check_if_all_ate(t_philosopher *philos)
 {
 	int	i;
 	int	finished_eating;
@@ -97,9 +83,9 @@ int	check_if_all_ate(philosopher *philos)
 
 void	*monitor(void *arg)
 {
-	philosopher *philos;
-	philos = (philosopher *)arg;
+	t_philosopher	*philos;
 
+	philos = (t_philosopher *)arg;
 	while (1)
 	{
 		if (check_if_dead(philos) == 1 || check_if_all_ate(philos) == 1)

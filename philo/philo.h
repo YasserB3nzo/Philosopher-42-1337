@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:42:00 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/28 15:59:53 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/28 16:47:17 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct data
 	pthread_mutex_t	write_lock;
 	pthread_mutex_t	dead_lock;
 	pthread_mutex_t	meal_lock;
-}					philo_data;
+}					t_philo_data;
 
 typedef struct philo
 {
@@ -46,11 +46,11 @@ typedef struct philo
 	int				philo_id;
 	int				meal_counter;
 	unsigned long	last_meal_time;
-	philo_data		*data;
+	t_philo_data	*data;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	int				eating;
-}					philosopher;
+}					t_philosopher;
 
 # define PHILO_MAX_COUNT 200
 
@@ -59,24 +59,26 @@ int					error_message(void);
 long				ft_atoi(const char *str);
 void				*get_g_data(void);
 long				timestamp_in_ms(void);
-void				init_data(philo_data *data, char **av);
-void				init_philos(philosopher *philosophers, philo_data *data,
+void				init_data(t_philo_data *data, char **av);
+void				init_philos(t_philosopher *philosophers, t_philo_data *data,
 						pthread_mutex_t *forks);
 void				*monitor(void *arg);
-void				destroy(philo_data *data, philosopher *philosophers,
+void				destroy(t_philo_data *data, t_philosopher *philosophers,
 						pthread_mutex_t *forks);
-int					one_casephilo(philo_data *data, pthread_mutex_t *forks);
+int					one_casephilo(t_philo_data *data, pthread_mutex_t *forks);
 void				*philosopher_routine(void *arg);
-void				init_threads(philosopher *philosophers, philo_data *data);
-void				eat(philosopher *philo);
-void				think(philosopher *philo);
-void				dream(philosopher *philo);
+void				init_threads(t_philosopher *philosophers,
+						t_philo_data *data);
+void				eat(t_philosopher *philo);
+void				think(t_philosopher *philo);
+void				dream(t_philosopher *philo);
 void				ft_usleep(unsigned long milliseconds);
-void				print_message(char *str, philosopher *philo, int id);
-int					dead_flag_check(philosopher *philo);
-int					philosopher_dead(philosopher *philo);
-int					check_if_dead(philosopher *philos);
-int					check_if_all_ate(philosopher *philos);
+void				print_message(char *str, t_philosopher *philo, int id);
+int					dead_flag_check(t_philosopher *philo);
+int					philosopher_dead(t_philosopher *philo);
+int					check_if_dead(t_philosopher *philos);
+int					check_if_all_ate(t_philosopher *philos);
 size_t				get_current_time(void);
+void				init_forks(pthread_mutex_t *forks, int number_of_philo);
 
 #endif

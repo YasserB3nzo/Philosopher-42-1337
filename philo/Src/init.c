@@ -6,13 +6,21 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:31:34 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/28 16:00:23 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/28 16:47:10 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	init_data(philo_data *data, char **av)
+long	timestamp_in_ms(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+}
+
+void	init_data(t_philo_data *data, char **av)
 {
 	data->number_of_philo = ft_atoi(av[1]);
 	data->time_to_die = ft_atoi(av[2]);
@@ -29,17 +37,24 @@ void	init_data(philo_data *data, char **av)
 	data->start_time = get_current_time();
 }
 
-void	init_philos(philosopher *philosophers, philo_data *data,
-		pthread_mutex_t *forks)
+void	init_forks(pthread_mutex_t *forks, int number_of_philo)
 {
 	int	i;
 
 	i = 0;
-	while (i < data->number_of_philo)
+	while (i < number_of_philo)
 	{
 		pthread_mutex_init(&forks[i], NULL);
 		i++;
 	}
+}
+
+void	init_philos(t_philosopher *philosophers, t_philo_data *data,
+		pthread_mutex_t *forks)
+{
+	int	i;
+
+	init_forks(forks, data->number_of_philo);
 	i = 0;
 	while (i < data->number_of_philo)
 	{
@@ -48,17 +63,22 @@ void	init_philos(philosopher *philosophers, philo_data *data,
 		philosophers[i].last_meal_time = data->start_time;
 		philosophers[i].data = data;
 		philosophers[i].eating = 0;
-		if (i % 2 == 0) {
+		if (i % 2 == 0)
+		{
 			philosophers[i].left_fork = &forks[(i + 1) % data->number_of_philo];
 			philosophers[i].right_fork = &forks[i];
-		} else {
+		}
+		else
+		{
 			philosophers[i].left_fork = &forks[i];
-			philosophers[i].right_fork = &forks[(i + 1) % data->number_of_philo];
+			philosophers[i].right_fork = &forks[(i + 1)
+				% data->number_of_philo];
 		}
 		i++;
 	}
 }
-void	init_threads(philosopher *philosophers, philo_data *data)
+
+void	init_threads(t_philosopher *philosophers, t_philo_data *data)
 {
 	pthread_t	serbay;
 	int			i;
@@ -72,7 +92,7 @@ void	init_threads(philosopher *philosophers, philo_data *data)
 	while (i < data->number_of_philo)
 	{
 		pthread_create(&philosophers[i].thread, NULL, philosopher_routine,
-				&philosophers[i]);
+			&philosophers[i]);
 		i++;
 	}
 	i = 0;
