@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:50:43 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/28 16:38:41 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/28 17:15:10 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ void	eat(t_philosopher *philo)
 	pthread_mutex_lock(philo->right_fork);
 	print_message("has taken a fork", philo, philo->philo_id);
 	pthread_mutex_lock(&philo->data->meal_lock);
+	ft_usleep(philo->data->time_to_eat);
 	philo->eating = 1;
 	philo->last_meal_time = get_current_time();
 	philo->meal_counter++;
 	pthread_mutex_unlock(&philo->data->meal_lock);
 	print_message("is eating", philo, philo->philo_id);
-	ft_usleep(philo->data->time_to_eat);
 	pthread_mutex_lock(&philo->data->meal_lock);
 	philo->eating = 0;
 	pthread_mutex_unlock(&philo->data->meal_lock);
@@ -60,8 +60,8 @@ void	*philosopher_routine(void *arg)
 
 	philo = (t_philosopher *)arg;
 	data = philo->data;
-	if (philo->philo_id % 2 == 0)
-		ft_usleep(1);
+	if (philo->philo_id % 2 == 1)
+		usleep(100);
 	while (!dead_flag_check(philo))
 	{
 		eat(philo);
