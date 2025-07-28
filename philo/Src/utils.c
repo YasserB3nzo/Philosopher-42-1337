@@ -18,8 +18,7 @@ int	error_message(void)
 	return (0);
 }
 
-void	destroy(t_philo_data *data, t_philosopher *philosophers,
-		pthread_mutex_t *forks)
+void	destroy(t_philo_data *data, pthread_mutex_t *forks)
 {
 	int	i;
 

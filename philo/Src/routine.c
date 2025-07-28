@@ -56,10 +56,8 @@ void	eat(t_philosopher *philo)
 void	*philosopher_routine(void *arg)
 {
 	t_philosopher	*philo;
-	t_philo_data	*data;
 
 	philo = (t_philosopher *)arg;
-	data = philo->data;
 	if (philo->philo_id % 2 == 1)
 		usleep(100);
 	while (!dead_flag_check(philo))

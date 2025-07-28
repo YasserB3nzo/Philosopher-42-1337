@@ -48,6 +48,6 @@ int	main(int ac, char **av)
 	}
 	else
 		init_threads(philosophers, data);
-	destroy(data, philosophers, forks);
+	destroy(data, forks);
 	return (0);
 }

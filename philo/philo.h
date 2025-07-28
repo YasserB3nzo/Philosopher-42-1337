@@ -32,7 +32,7 @@ typedef struct data
 	unsigned long	time_to_sleep;
 	unsigned long	time_to_die;
 	unsigned long	time_to_eat;
-	unsigned long	meals;
+	int				meals;
 	unsigned long	start_time;
 	int				dead_flag;
 	pthread_mutex_t	write_lock;
@@ -63,8 +63,7 @@ void				init_data(t_philo_data *data, char **av);
 void				init_philos(t_philosopher *philosophers, t_philo_data *data,
 						pthread_mutex_t *forks);
 void				*monitor(void *arg);
-void				destroy(t_philo_data *data, t_philosopher *philosophers,
-						pthread_mutex_t *forks);
+void				destroy(t_philo_data *data, pthread_mutex_t *forks);
 int					one_casephilo(t_philo_data *data, pthread_mutex_t *forks);
 void				*philosopher_routine(void *arg);
 void				init_threads(t_philosopher *philosophers,

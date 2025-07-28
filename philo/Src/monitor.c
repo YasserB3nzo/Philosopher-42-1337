@@ -61,7 +61,7 @@ int	check_if_all_ate(t_philosopher *philos)
 
 	i = 0;
 	finished_eating = 0;
-	if (philos[0].data->meals == -1)
+	if (philos[0].data->meals == (-1))
 		return (0);
 	while (i < philos[0].data->number_of_philo)
 	{
