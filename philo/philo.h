@@ -47,9 +47,10 @@ typedef struct philo
 	int				meal_counter;
 	unsigned long	last_meal_time;
 	philo_data		*data;
-	int				one_dead_flag;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	meal_lock;
+	int				eating;
 }					philosopher;
 
 # define PHILO_MAX_COUNT 200
@@ -78,6 +79,5 @@ int					philosopher_dead(philosopher *philo);
 int					check_if_dead(philosopher *philos);
 int					check_if_all_ate(philosopher *philos);
 size_t				get_current_time(void);
-int					check_all_if_dead(philosopher *philo);
 
 #endif

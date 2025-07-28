@@ -43,13 +43,19 @@ void	init_philos(philosopher *philosophers, philo_data *data,
 	i = 0;
 	while (i < data->number_of_philo)
 	{
-		philosophers[i].one_dead_flag = 0;
 		philosophers[i].philo_id = i + 1;
 		philosophers[i].meal_counter = 0;
 		philosophers[i].last_meal_time = data->start_time;
 		philosophers[i].data = data;
-		philosophers[i].left_fork = &forks[i];
-		philosophers[i].right_fork = &forks[(i + 1) % data->number_of_philo];
+		philosophers[i].eating = 0;
+		pthread_mutex_init(&philosophers[i].meal_lock, NULL);
+		if (i % 2 == 0) {
+			philosophers[i].left_fork = &forks[(i + 1) % data->number_of_philo];
+			philosophers[i].right_fork = &forks[i];
+		} else {
+			philosophers[i].left_fork = &forks[i];
+			philosophers[i].right_fork = &forks[(i + 1) % data->number_of_philo];
+		}
 		i++;
 	}
 }

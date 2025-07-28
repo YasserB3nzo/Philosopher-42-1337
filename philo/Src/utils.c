@@ -33,6 +33,7 @@ void	destroy(philo_data *data, philosopher *philosophers,
 	while (i < data->number_of_philo)
 	{
 		pthread_mutex_destroy(&forks[i]);
+		pthread_mutex_destroy(&philosophers[i].meal_lock);
 		i++;
 	}
 	pthread_mutex_destroy(&data->write_lock);

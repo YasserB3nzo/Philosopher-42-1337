@@ -36,10 +36,10 @@ int	dead_flag_check(philosopher *philo)
 }
 int	philosopher_dead(philosopher *philo)
 {
-	pthread_mutex_lock(&philo->data->meal_lock);
-	if (get_current_time() - philo->last_meal_time >= philo->data->time_to_die)
-		return (pthread_mutex_unlock(&philo->data->meal_lock), 1);
-	pthread_mutex_unlock(&philo->data->meal_lock);
+	pthread_mutex_lock(&philo->meal_lock);
+	if (get_current_time() - philo->last_meal_time >= philo->data->time_to_die && philo->eating == 0)
+		return (pthread_mutex_unlock(&philo->meal_lock), 1);
+	pthread_mutex_unlock(&philo->meal_lock);
 	return (0);
 }
 int	check_if_dead(philosopher *philos)
@@ -53,7 +53,7 @@ int	check_if_dead(philosopher *philos)
 		{
 			print_message("died", &philos[i], philos[i].philo_id);
 			pthread_mutex_lock(&philos[i].data->dead_lock);
-			philos[i].one_dead_flag = 1;
+			philos[i].data->dead_flag = 1;
 			pthread_mutex_unlock(&philos[i].data->dead_lock);
 			return (1);
 		}
@@ -72,10 +72,10 @@ int	check_if_all_ate(philosopher *philos)
 		return (0);
 	while (i < philos[0].data->number_of_philo)
 	{
-		pthread_mutex_lock(&philos[0].data->meal_lock);
+		pthread_mutex_lock(&philos[i].meal_lock);
 		if (philos[i].meal_counter >= philos[0].data->meals)
 			finished_eating++;
-		pthread_mutex_unlock(&philos[0].data->meal_lock);
+		pthread_mutex_unlock(&philos[i].meal_lock);
 		i++;
 	}
 	if (finished_eating == philos[0].data->number_of_philo)
@@ -97,6 +97,7 @@ void	*monitor(void *arg)
 	{
 		if (check_if_dead(philos) == 1 || check_if_all_ate(philos) == 1)
 			break ;
+		usleep(1000); // 1ms sleep
 	}
 	return (NULL);
 }
