@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 16:13:45 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/27 22:20:46 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/28 15:50:52 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	destroy(philo_data *data, philosopher *philosophers,
 	while (i < data->number_of_philo)
 	{
 		pthread_mutex_destroy(&forks[i]);
-		pthread_mutex_destroy(&philosophers[i].meal_lock);
 		i++;
 	}
 	pthread_mutex_destroy(&data->write_lock);
