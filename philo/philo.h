@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:42:00 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/28 16:47:17 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/29 19:01:11 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ typedef struct philo
 {
 	pthread_t		thread;
 	int				philo_id;
-	int				meal_counter;
+	int				meal_counter; // how many meals
 	unsigned long	last_meal_time;
 	t_philo_data	*data;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	int				eating;
+	int				eating; // if he finshed eating 
 }					t_philosopher;
 
 # define PHILO_MAX_COUNT 200

@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:31:34 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/28 16:47:10 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/29 19:05:17 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,13 @@ void	init_philos(t_philosopher *philosophers, t_philo_data *data,
 		philosophers[i].eating = 0;
 		if (i % 2 == 0)
 		{
-			philosophers[i].left_fork = &forks[(i + 1) % data->number_of_philo];
-			philosophers[i].right_fork = &forks[i];
+			philosophers[i].left_fork = &forks[i];
+			philosophers[i].right_fork = &forks[(i + 1) % data->number_of_philo];
 		}
 		else
 		{
-			philosophers[i].left_fork = &forks[i];
-			philosophers[i].right_fork = &forks[(i + 1)
-				% data->number_of_philo];
+			philosophers[i].left_fork = &forks[(i + 1) % data->number_of_philo];
+			philosophers[i].right_fork = &forks[i];
 		}
 		i++;
 	}
