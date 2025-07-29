@@ -53,25 +53,29 @@ size_t	get_current_time(void)
 
 long	ft_atoi(const char *str)
 {
-	long	num;
-	int		sign;
+	long	res;
 	int		i;
+	int		sign;
 
 	i = 0;
+	res = 0;
 	sign = 1;
-	num = 0;
 	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
 		i++;
 	if (str[i] == '-' || str[i] == '+')
 		if (str[i++] == '-')
 			sign = -1;
-	while (str[i] >= '0' && str[i] <= '9')
+	while (str[i])
 	{
-		if (str[i] < '0' || str[i] > '9')
+		if (str[i] >= '0' && str[i] <= '9')
+		{
+			res = res * 10 + str[i] - '0';
+			if (res > INT_MAX || res < INT_MIN)
+				return (0);
+		}
+		else
 			return (0);
-		num = num * 10 + (str[i++] - '0');
-		if (num > INT_MAX)
-			return (0);
+		i++;
 	}
-	return (num * sign);
+	return (res * sign);
 }
