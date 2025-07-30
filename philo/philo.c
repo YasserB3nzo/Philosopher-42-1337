@@ -19,7 +19,8 @@ void	print_message(char *str, t_philosopher *philo, int id)
 	pthread_mutex_lock(&philo->data->write_lock);
 	time = get_current_time() - philo->data->start_time;
 	if (!dead_flag_check(philo))
-		printf("%zu %d %s\n", time, id, str);
+		printf("\033[1;35m %zu %d %s\n \033[0m", time, id, str);
+	// \033[1;34mis eating\033[0m
 	pthread_mutex_unlock(&philo->data->write_lock);
 }
 
