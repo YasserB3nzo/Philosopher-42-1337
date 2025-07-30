@@ -1,8 +1,6 @@
 NAME = philo
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread
-
-valgrind = -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -pthread
 
 SRCS = philo.c Src/parsing.c \
 	Src/utils.c Src/init.c \

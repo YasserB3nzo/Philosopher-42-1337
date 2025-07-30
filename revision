@@ -48,3 +48,16 @@
 // when multiple tasks or threads access a shared resource
 // without sufficient protections,
 // leading to undefined or unpredictable behavior.
+
+
+Purpose:
+Prevent deadlock by ensuring all philosophers acquire forks in the same order.
+
+With pointer comparison:
+All philosophers lock forks in consistent order (lower address → higher address)
+No deadlock - simulation runs smoothly
+
+Without pointer comparison:
+Philosophers lock forks in random order
+Circular waiting → DEADLOCK → program hangs forever
+Simple: It's the difference between a working program and a frozen one.

@@ -79,5 +79,6 @@ int					check_if_dead(t_philosopher *philos);
 int					check_if_all_ate(t_philosopher *philos);
 size_t				get_current_time(void);
 void				init_forks(pthread_mutex_t *forks, int number_of_philo);
+void				take_forks(t_philosopher *philo);
 
 #endif
