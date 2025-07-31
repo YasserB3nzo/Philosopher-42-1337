@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:50:43 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/29 19:05:17 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/31 19:42:20 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	take_forks(t_philosopher *philo)
 
 void	eat(t_philosopher *philo)
 {
-	if(check_if_all_ate(philo))
-		return;
+	// if(check_if_all_ate(philo))
+	// 	return;
 	take_forks(philo);
 	pthread_mutex_lock(&philo->data->meal_lock);
 	philo->eating = 1;
