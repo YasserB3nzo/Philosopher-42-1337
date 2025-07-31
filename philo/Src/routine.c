@@ -14,10 +14,10 @@
 
 int	one_casephilo(t_philo_data *data, pthread_mutex_t *forks)
 {
-	pthread_mutex_lock(&forks[0]);
+	pthread_mutex_lock(&forks[0]); // 
 	printf("%ld 1 has taken a fork\n", get_current_time() - data->start_time);
 	usleep(data->time_to_die * 1000);
-	printf("%ld 1 died\n", get_current_time() - data->start_time);
+	printf("%ld 1 died\n", (get_current_time() - data->start_time));
 	pthread_mutex_unlock(&forks[0]);
 	return (0);
 }
@@ -31,6 +31,7 @@ void	dream(t_philosopher *philo)
 void	think(t_philosopher *philo)
 {
 	print_message("is thinking", philo, philo->philo_id);
+	ft_usleep(10);  // Give other philosophers a chance
 }
 
 void	take_forks(t_philosopher *philo)
@@ -56,6 +57,8 @@ void	take_forks(t_philosopher *philo)
 
 void	eat(t_philosopher *philo)
 {
+	if(check_if_all_ate(philo))
+		return;
 	take_forks(philo);
 	pthread_mutex_lock(&philo->data->meal_lock);
 	philo->eating = 1;
@@ -76,7 +79,7 @@ void	*philosopher_routine(void *arg)
 
 	philo = (t_philosopher *)arg;
 	if (philo->philo_id % 2 == 0)
-		ft_usleep(1);	
+		ft_usleep(30);	  // Larger delay for even philosophers	
 		// usleep(1500);
 	while (!dead_flag_check(philo))
 	{
