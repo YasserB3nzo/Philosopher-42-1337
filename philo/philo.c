@@ -6,11 +6,17 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:43:35 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/28 16:41:11 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/31 21:34:51 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	dream(t_philosopher *philo)
+{
+	print_message("is sleeping", philo, philo->philo_id);
+	ft_usleep(philo->data->time_to_sleep);
+}
 
 void	print_message(char *str, t_philosopher *philo, int id)
 {
@@ -20,7 +26,6 @@ void	print_message(char *str, t_philosopher *philo, int id)
 	time = get_current_time() - philo->data->start_time;
 	if (!dead_flag_check(philo))
 		printf("\033[1;35m %zu %d %s\n \033[0m", time, id, str);
-	// \033[1;34mis eating\033[0m
 	pthread_mutex_unlock(&philo->data->write_lock);
 }
 

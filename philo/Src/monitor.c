@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 16:34:32 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/29 19:05:17 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/31 21:41:48 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	philosopher_dead(t_philosopher *philo)
 {
 	pthread_mutex_lock(&philo->data->meal_lock);
 	if (get_current_time() - philo->last_meal_time > philo->data->time_to_die
-		&& philo->eating == 0)
+		&& philo->data->eat_flag == 0)
 		return (pthread_mutex_unlock(&philo->data->meal_lock), 1);
 	pthread_mutex_unlock(&philo->data->meal_lock);
 	return (0);
@@ -74,7 +74,7 @@ int	check_if_all_ate(t_philosopher *philos)
 	if (finished_eating == philos[0].data->number_of_philo)
 	{
 		pthread_mutex_lock(&philos[0].data->dead_lock);
-		philos[0].data->dead_flag = 1;
+		philos[0].data->eat_flag = 1;
 		pthread_mutex_unlock(&philos[0].data->dead_lock);
 		return (1);
 	}
@@ -90,7 +90,6 @@ void	*monitor(void *arg)
 	{
 		if (check_if_dead(philos) == 1 || check_if_all_ate(philos) == 1)
 			break ;
-		usleep(100);
 	}
 	return (NULL);
 }

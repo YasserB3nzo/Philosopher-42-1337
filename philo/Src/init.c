@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:31:34 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/29 19:05:17 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/31 21:36:27 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	init_data(t_philo_data *data, char **av)
 	else
 		data->meals = -1;
 	data->dead_flag = 0;
+	data->eat_flag = 0;
 	pthread_mutex_init(&data->write_lock, NULL);
 	pthread_mutex_init(&data->dead_lock, NULL);
 	pthread_mutex_init(&data->meal_lock, NULL);
@@ -62,11 +63,11 @@ void	init_philos(t_philosopher *philosophers, t_philo_data *data,
 		philosophers[i].meal_counter = 0;
 		philosophers[i].last_meal_time = data->start_time;
 		philosophers[i].data = data;
-		philosophers[i].eating = 0;
 		if (i % 2 == 0)
 		{
 			philosophers[i].left_fork = &forks[i];
-			philosophers[i].right_fork = &forks[(i + 1) % data->number_of_philo];
+			philosophers[i].right_fork = &forks[(i + 1)
+				% data->number_of_philo];
 		}
 		else
 		{

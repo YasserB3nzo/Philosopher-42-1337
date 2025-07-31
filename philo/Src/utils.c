@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 16:13:45 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/29 19:05:17 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/07/31 21:32:43 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_usleep(unsigned long milliseconds)
 
 	start = get_current_time();
 	while ((get_current_time() - start) < milliseconds)
-		usleep(100);
+		usleep(500);
 }
 
 size_t	get_current_time(void)
