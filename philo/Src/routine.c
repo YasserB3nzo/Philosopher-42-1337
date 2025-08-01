@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:50:43 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/07/31 21:35:33 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/08/01 23:48:33 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@ int	one_casephilo(t_philo_data *data, pthread_mutex_t *forks)
 	printf("%ld 1 died\n", get_current_time() - data->start_time);
 	pthread_mutex_unlock(&forks[0]);
 	return (0);
-}
-
-void	think(t_philosopher *philo)
-{
-	print_message("is thinking", philo, philo->philo_id);
 }
 
 void	take_forks(t_philosopher *philo)
@@ -47,20 +42,11 @@ void	take_forks(t_philosopher *philo)
 
 void	eat(t_philosopher *philo)
 {
-	pthread_mutex_lock(&philo->data->meal_lock);
-	if (philo->data->meals != -1 && philo->meal_counter == philo->data->meals)
-	{
-		pthread_mutex_unlock(&philo->data->meal_lock);
-		pthread_mutex_unlock(philo->right_fork);
-		pthread_mutex_unlock(philo->left_fork);
-		return ;
-	}
-	pthread_mutex_unlock(&philo->data->meal_lock);
 	take_forks(philo);
-	print_message("is eating", philo, philo->philo_id);
 	pthread_mutex_lock(&philo->data->meal_lock);
 	philo->last_meal_time = get_current_time();
 	pthread_mutex_unlock(&philo->data->meal_lock);
+	print_message("is eating", philo, philo->philo_id);
 	ft_usleep(philo->data->time_to_eat);
 	pthread_mutex_lock(&philo->data->meal_lock);
 	philo->meal_counter++;
@@ -69,15 +55,33 @@ void	eat(t_philosopher *philo)
 	pthread_mutex_unlock(philo->left_fork);
 }
 
+void	think(t_philosopher *philo)
+{
+	print_message("is thinking", philo, philo->philo_id);
+}
+
+void	dream(t_philosopher *philo)		
+{
+	print_message("is sleeping", philo, philo->philo_id);
+	ft_usleep(philo->data->time_to_sleep);
+}
+
 void	*philosopher_routine(void *arg)
 {
 	t_philosopher	*philo;
 
 	philo = (t_philosopher *)arg;
 	if (philo->philo_id % 2 == 0)
-		usleep(500);
+		usleep(100);
 	while (!dead_flag_check(philo))
 	{
+		pthread_mutex_lock(&philo->data->meal_lock);
+		if (philo->data->meals != -1 && philo->meal_counter >= philo->data->meals)
+		{
+			pthread_mutex_unlock(&philo->data->meal_lock);
+			break;
+		}
+		pthread_mutex_unlock(&philo->data->meal_lock);
 		eat(philo);
 		if (philo->data->eat_flag || philo->data->dead_flag)
 			return (NULL);
