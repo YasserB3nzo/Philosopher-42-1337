@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 16:34:32 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/08/01 23:50:58 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/08/02 00:17:50 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	philosopher_dead(t_philosopher *philo)
 {
 	pthread_mutex_lock(&philo->data->meal_lock);
 	if (get_current_time() - philo->last_meal_time > philo->data->time_to_die
-		&& philo->data->meal_c == 0)
+		&& philo->meal_counter == 0)
 		return (pthread_mutex_unlock(&philo->data->meal_lock), 1);
 	pthread_mutex_unlock(&philo->data->meal_lock);
 	return (0);
