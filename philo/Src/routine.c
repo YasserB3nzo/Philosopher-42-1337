@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:50:43 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/08/01 23:48:33 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/08/02 01:20:06 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,24 @@ void	take_forks(t_philosopher *philo)
 	}
 }
 
-void	eat(t_philosopher *philo)
+void eat(t_philosopher *philo)
 {
-	take_forks(philo);
-	pthread_mutex_lock(&philo->data->meal_lock);
-	philo->last_meal_time = get_current_time();
-	pthread_mutex_unlock(&philo->data->meal_lock);
-	print_message("is eating", philo, philo->philo_id);
-	ft_usleep(philo->data->time_to_eat);
-	pthread_mutex_lock(&philo->data->meal_lock);
-	philo->meal_counter++;
-	pthread_mutex_unlock(&philo->data->meal_lock);
-	pthread_mutex_unlock(philo->right_fork);
-	pthread_mutex_unlock(philo->left_fork);
+    take_forks(philo);
+    pthread_mutex_lock(&philo->data->meal_lock);
+    philo->last_meal_time = get_current_time();
+    pthread_mutex_unlock(&philo->data->meal_lock);
+    print_message("is eating", philo, philo->philo_id);
+    ft_usleep(philo->data->time_to_eat);
+    pthread_mutex_lock(&philo->data->meal_lock);
+    philo->meal_counter++;
+    pthread_mutex_unlock(&philo->data->meal_lock);
+    pthread_mutex_unlock(philo->right_fork);
+    pthread_mutex_unlock(philo->left_fork);
 }
 
 void	think(t_philosopher *philo)
 {
 	print_message("is thinking", philo, philo->philo_id);
-}
-
-void	dream(t_philosopher *philo)		
-{
-	print_message("is sleeping", philo, philo->philo_id);
-	ft_usleep(philo->data->time_to_sleep);
 }
 
 void	*philosopher_routine(void *arg)
@@ -79,7 +73,7 @@ void	*philosopher_routine(void *arg)
 		if (philo->data->meals != -1 && philo->meal_counter >= philo->data->meals)
 		{
 			pthread_mutex_unlock(&philo->data->meal_lock);
-			break;
+			break ;
 		}
 		pthread_mutex_unlock(&philo->data->meal_lock);
 		eat(philo);
@@ -89,8 +83,6 @@ void	*philosopher_routine(void *arg)
 		if (philo->data->eat_flag || philo->data->dead_flag)
 			return (NULL);
 		dream(philo);
-		if (philo->data->eat_flag || philo->data->dead_flag)
-			return (NULL);
 	}
 	return (NULL);
 }

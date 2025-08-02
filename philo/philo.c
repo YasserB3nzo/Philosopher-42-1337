@@ -6,11 +6,17 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:43:35 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/08/01 21:56:09 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/08/02 00:39:10 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	dream(t_philosopher *philo)
+{
+	print_message("is sleeping", philo, philo->philo_id);
+	ft_usleep(philo->data->time_to_sleep);
+}
 
 void	print_message(char *str, t_philosopher *philo, int id)
 {
