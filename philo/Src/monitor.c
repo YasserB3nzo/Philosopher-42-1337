@@ -6,7 +6,7 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 16:34:32 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/08/02 01:20:06 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/08/03 00:57:03 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ int	philosopher_dead(t_philosopher *philo)
 {
 	pthread_mutex_lock(&philo->data->meal_lock);
 	if (get_current_time() - philo->last_meal_time > philo->data->time_to_die)
-		return (pthread_mutex_unlock(&philo->data->meal_lock), 1);
+	{
+		pthread_mutex_unlock(&philo->data->meal_lock);
+		return (1);
+	}
 	pthread_mutex_unlock(&philo->data->meal_lock);
 	return (0);
 }
@@ -42,10 +45,7 @@ int	check_if_dead(t_philosopher *philos)
 	{
 		if (philosopher_dead(&philos[i]))
 		{
-			print_message("died", &philos[i], philos[i].philo_id);
-			pthread_mutex_lock(&philos[i].data->dead_lock);
-			philos[i].data->dead_flag = 1;
-			pthread_mutex_unlock(&philos[i].data->dead_lock);
+			set_death_flag(philos, i);
 			return (1);
 		}
 		i++;
@@ -57,19 +57,21 @@ int	check_if_all_ate(t_philosopher *philos)
 {
 	int	i;
 	int	finished_eating;
+	int	required_meals;
 
-	i = 0;
-	finished_eating = 0;
-	if (philos[0].data->meals == (-1))
+	if (philos[0].data->meals == -1)
 		return (0);
+	required_meals = philos[0].data->meals;
+	finished_eating = 0;
+	pthread_mutex_lock(&philos[0].data->meal_lock);
+	i = 0;
 	while (i < philos[0].data->number_of_philo)
 	{
-		pthread_mutex_lock(&philos[0].data->meal_lock);
-		if (philos[i].meal_counter >= philos[0].data->meals)
+		if (philos[i].meal_counter >= required_meals)
 			finished_eating++;
-		pthread_mutex_unlock(&philos[0].data->meal_lock);
 		i++;
 	}
+	pthread_mutex_unlock(&philos[0].data->meal_lock);
 	if (finished_eating == philos[0].data->number_of_philo)
 	{
 		pthread_mutex_lock(&philos[0].data->dead_lock);
@@ -87,8 +89,9 @@ void	*monitor(void *arg)
 	philos = (t_philosopher *)arg;
 	while (1)
 	{
-		if (check_if_dead(philos) == 1 || check_if_all_ate(philos) == 1)
+		if (check_if_dead(philos) || check_if_all_ate(philos))
 			break ;
+		usleep(1000);
 	}
 	return (NULL);
 }

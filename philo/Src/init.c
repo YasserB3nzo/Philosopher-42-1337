@@ -6,19 +6,11 @@
 /*   By: ybenzidi <ybenzidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:31:34 by ybenzidi          #+#    #+#             */
-/*   Updated: 2025/08/02 00:22:04 by ybenzidi         ###   ########.fr       */
+/*   Updated: 2025/08/03 00:57:12 by ybenzidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
-long	timestamp_in_ms(void)
-{
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
-}
 
 void	init_data(t_philo_data *data, char **av)
 {
