@@ -382,6 +382,10 @@ $ ./philo
 ```
 ** Don't forget to insert the arguments
 
-## Author
+### Calculate.py
 
-- [@DeRuina](https://github.com/DeRuina)
+Calculate.py is a script that calculates how many philosophers eat based on the input arguments you provide. It will help you understand how many philosophers can eat given the time constraints and the number of meals they need to consume.
+```bash
+# Run the script
+$ python3 calculate.py
+
