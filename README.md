@@ -356,10 +356,11 @@ Remember: No philosopher should die, and the simulation should run smoothly with
 
 ---
 
-*Now you understand the elegant dance of concurrent programming! 💃🕺*
-
 ### Check The Philo.mmd file and use it while coding 
-### when testing with X number of meals , use caluclate.py to make sure that philos eat enough meals
+
+### when testing with meal limit , use caluclate.py to make sure that philos reached the limit
 ```bash
 python3 calculate.py
 ```
+
+*Now you understand the elegant dance of concurrent programming! 💃🕺*
