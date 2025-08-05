@@ -210,16 +210,9 @@ void *monitor(void *arg) {
 ## ⚡ Critical Optimizations
 
 ### 1. **Batch Meal Checking**
-**Bad approach** (original):
-```c
-for each philosopher {
-    lock(meal_mutex);
-    check_meal_count();
-    unlock(meal_mutex);
-}
 ```
 
-**Good approach** (optimized):
+**Good approach**:
 ```c
 lock(meal_mutex);
 for each philosopher {
@@ -228,25 +221,12 @@ for each philosopher {
 unlock(meal_mutex);
 ```
 
-**Why this is better:**
+**Why :**
 - Reduces lock contention from N locks to 1 lock
 - Faster execution (less context switching)
 - More consistent data (atomic snapshot of all meal counts)
 
 ### 2. **Combined Meal Updates**
-**Bad approach:**
-```c
-lock(meal_mutex);
-last_meal_time = now();
-unlock(meal_mutex);
-
-// ... eating happens ...
-
-lock(meal_mutex);
-meal_counter++;
-unlock(meal_mutex);
-```
-
 **Good approach:**
 ```c
 lock(meal_mutex);
