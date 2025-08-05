@@ -23,12 +23,12 @@ int	checkargument(int ac, char **av)
 	while (i < ac)
 	{
 		number = ft_atoi(av[i]);
-		if (number <= 0)
+		if (number <= 0 && i != 5)
 			return (error_message());
 		if (i == 1 && number > 200)
 			return (error_message());
-		if((i == 3 || i == 4) && number < 60)
-			return (error_message());
+		if (i == 5 && number == 0)
+			return (0);
 		i++;
 	}
 	return (1);
