@@ -77,10 +77,10 @@ void	*philosopher_routine(void *arg)
 		eat(philo);
 		if (should_stop_simulation(philo))
 			break ;
-		dream(philo);
 		think(philo);
 		if (should_stop_simulation(philo))
 			break ;
+		dream(philo);
 	}
 	return (NULL);
 }
