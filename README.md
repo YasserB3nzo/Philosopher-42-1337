@@ -115,7 +115,7 @@ pthread_mutex_unlock(&fork); // "Here's the key back!"
 
 ---
 
-## 🎯 Our Solution Strategy
+## 🎯 My Solution Strategy
 
 ### 1. **Avoid Deadlock with Ordered Locking**
 Instead of everyone grabbing forks randomly, we use a **rule**:
