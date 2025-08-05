@@ -266,7 +266,7 @@ The test case `3 180 60 60` is brutal because:
 - 60ms eating + 60ms sleeping = 120ms minimum cycle
 - Only 60ms buffer for delays and context switching!
 
-Our solutions:
+Mu solutions:
 - **Dynamic staggering**: `delay = eating_time / 2`
 - **Action ordering**: EAT → SLEEP → THINK (optimal for timing)
 - **Calculated thinking**: Prevents resource starvation
@@ -377,3 +377,9 @@ Remember: No philosopher should die, and the simulation should run smoothly with
 ---
 
 *Now you understand the elegant dance of concurrent programming! 💃🕺*
+
+### Check The Philo.mmd file and use it while coding 
+### when testing with X number of meals , use caluclate.py to make sure that philos eat enough meals
+```bash
+python3 calculate.py
+```
