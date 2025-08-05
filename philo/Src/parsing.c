@@ -60,7 +60,7 @@ void	take_forks(t_philosopher *philo)
 	}
 }
 
-static void	set_death_flag(t_philosopher *philos, int dead_philo_id)
+void	set_death_flag(t_philosopher *philos, int dead_philo_id)
 {
 	print_message("died", &philos[dead_philo_id],
 		philos[dead_philo_id].philo_id);

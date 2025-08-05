@@ -91,5 +91,6 @@ int					philosopher_dead(t_philosopher *philo);
 int					check_if_dead(t_philosopher *philos);
 int					check_if_all_ate(t_philosopher *philos);
 void				destroy(t_philo_data *data, pthread_mutex_t *forks);
+void     			set_death_flag(t_philosopher *philos, int dead_philo_id);
 
 #endif
