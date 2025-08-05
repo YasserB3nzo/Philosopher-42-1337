@@ -27,6 +27,8 @@ int	checkargument(int ac, char **av)
 			return (error_message());
 		if (i == 1 && number > 200)
 			return (error_message());
+		if((i == 3 || i == 4) && number < 60)
+			return (error_message());
 		i++;
 	}
 	return (1);
